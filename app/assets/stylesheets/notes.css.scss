@@ -43,3 +43,64 @@ body {
   margin: 0 auto; /* Центрирование контейнера по горизонтали */
   padding: 20px; /* Внутренний отступ для контейнера, чтобы контент не был прижат к краям */
 }
+.note-item {
+  display: flex;
+  align-items: center;
+}
+.note-item a {
+  margin-right: 20px; /* Добавляет расстояние справа для ссылки */
+}
+.note-link {
+  color: black; /* Черный цвет текста ссылки */
+  text-decoration: none; /* Убираем подчеркивание */
+}
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: gray; /* Цвет текста кнопки */
+}
+
+.note-item {
+  position: relative;
+}
+
+.delete-cross {
+  display: inline-block;
+  width: 16px; /* Размер крестика */
+  height: 16px;
+  background-color: transparent; /* Прозрачный цвет фона */
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.delete-cross:before,
+.delete-cross:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: gray; /* Цвет крестика */
+  top: 50%;
+  left: 0;
+  transform-origin: center;
+}
+
+.delete-cross:before {
+  transform: rotate(45deg);
+}
+
+.delete-cross:after {
+  transform: rotate(-45deg);
+}
+.note-link {
+  color: black; /* Черный цвет текста ссылки */
+  text-decoration: none; /* Убираем подчеркивание */
+}
+
+.note-link:hover {
+  color: black; /* Черный цвет текста при наведении */
+}

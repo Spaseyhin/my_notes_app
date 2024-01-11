@@ -1,0 +1,7 @@
+<div class="note" id="note_<%= note.id %>">
+  <h3><%= note.title %></h3>
+  <p><%= note.content %></p>
+  <%= link_to "Show", note_path(note) %>
+  <%= link_to "Edit", edit_note_path(note) %>
+  <%= link_to "Delete", note_path(note), method: :delete, remote: true, data: { confirm: "Are you sure?" } %>
+</div>

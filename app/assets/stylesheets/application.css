@@ -13,49 +13,7 @@
  *= require_tree .
  *= require_self
  */
-.button-row {
-  display: flex;
-}
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
-.button-row a, .button-row input[type="submit"] {
-  margin-right: 5px; /* Устанавливаем расстояние между кнопками */
-}
 
-/* Опционально: Убираем отступ у последней кнопки, чтобы не было лишнего пространства в конце ряда */
-.button-row a:last-child, .button-row input[type="submit"]:last-child {
-  margin-right: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-}
-
-h1 {
-  color: #333;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0; /* Цвет фона, если нужно */
-}
-
-.container {
-  max-width: 800px; /* Ширина контейнера с основным контентом */
-  margin: 0 auto; /* Центрирование контейнера по горизонтали */
-  padding: 20px; /* Внутренний отступ для контейнера, чтобы контент не был прижат к краям */
-}

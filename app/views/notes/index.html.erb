@@ -2,10 +2,13 @@
 
 <ul>
   <% @notes.each do |note| %>
-    <li>
-      <%= link_to note.title, note_path(note) %>
-     
-
+    <li id="note_<%= note.id %>">
+      <div class="note-item">
+        <%= link_to note.title, note_path(note), class: "note-link" %>
+        <%= button_to note_path(note), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "delete-button" do %>
+          <span class="delete-cross"></span>
+        <% end %>
+      </div>
     </li>
   <% end %>
 </ul>

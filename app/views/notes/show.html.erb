@@ -2,7 +2,7 @@
 
 <p><%= @note.content %></p>
 <div class="button-row">
-<%= link_to "Back", notes_path, class: "btn btn-primary"  %>
-<%= link_to "edit", edit_note_path(@note), class: "btn btn-primary"  %>
+<%= link_to "Home", notes_path, class: "btn btn-primary"  %>
+<%= link_to "Edit", edit_note_path(@note), class: "btn btn-primary"  %>
 <%= button_to "Delete", note_path(@note), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
 </div>
