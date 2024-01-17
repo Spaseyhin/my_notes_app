@@ -29,11 +29,31 @@ class NotesController < ApplicationController
 
   def update
     if @note.update(note_params)
-      redirect_to @note, notice: 'Note was successfully updated.'
+      head :no_content
     else
-      render :edit
+      render json: @note.errors, status: :unprocessable_entity
     end
   end
+  def complete
+    @note = Note.find(params[:id])
+    @note.update(completed: true)
+    
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was successfully marked as complete.' }
+      format.json { render json: @note, status: :ok }
+    end
+  end
+  
+  def incomplete
+    @note = Note.find(params[:id])
+    @note.update(completed: false)
+    
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was marked as incomplete.' }
+      format.json { render json: @note, status: :ok }
+    end
+  end
+
 
   def destroy
     @note = Note.find(params[:id])
@@ -55,6 +75,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :content)
+    params.require(:note).permit(:title, :content, :completed)
   end
 end

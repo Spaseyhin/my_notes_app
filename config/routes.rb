@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'notes/edit'
   get 'notes/update'
   get 'notes/destroy'
-  resources :notes
+  resources :notes do
+   patch 'complete', on: :member
+   patch 'incomplete', on: :member
+  end
   root 'notes#index'
 end
