@@ -13,27 +13,33 @@ class NotesController < ApplicationController
     @notes = Note.all
   end
 
-  def create
-     @note = Note.new(note_params)
+def create
+  @note = Note.new(note_params)
 
-    if @note.save
-      redirect_to @note, notice: 'Note was successfully created.'
-    else
-      render :new
-    end
+  if @note.save
+    redirect_to notes_url, notice: 'Note was successfully created.'
+  else
+    render :new
   end
+end
+
 
   def edit
     @notes = Note.all
   end
 
+
   def update
-    if @note.update(note_params)
-      head :no_content
-    else
-      render json: @note.errors, status: :unprocessable_entity
+  if @note.update(note_params)
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was successfully updated.' }
+      format.json { head :no_content }
     end
+  else
+    render :edit
   end
+end
+
   def complete
     @note = Note.find(params[:id])
     @note.update(completed: true)
@@ -43,7 +49,7 @@ class NotesController < ApplicationController
       format.json { render json: @note, status: :ok }
     end
   end
-  
+
   def incomplete
     @note = Note.find(params[:id])
     @note.update(completed: false)

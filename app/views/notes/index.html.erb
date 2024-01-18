@@ -1,24 +1,24 @@
 <h1>All Notes</h1>
 
 <ul>
-<% @notes.each do |note| %>
-  <li id="note_<%= note.id %>" class="<%= 'completed' if note.completed? %>">
-    <div class="note-item">
-      <% if note.completed? %>
-        <%= button_to "✗", incomplete_note_path(note), method: :patch, remote: true, data: { note_id: note.id }, class: "btn btn-sm btn-secondary mr-2"  %>
-      <% else %>
-        <%= button_to "✓", complete_note_path(note), method: :patch, remote: true, data: { note_id: note.id }, class: "btn btn-sm btn-secondary mr-2" %>
-      <% end %>
-      <%= link_to note.title, note_path(note), class: "note-link" %>
-      <%= button_to note_path(note), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "delete-button" do %>
-        <span class="delete-cross"></span>
-      <% end %>
+  <% @notes.each do |note| %>
+    <li id="note_<%= note.id %>" class="<%= 'completed' if note.completed? %>">
+      <div class="note-item">
+        <%= check_box_tag 'complete[]', note.id, note.completed?, class: 'complete-checkbox', data: { note_id: note.id } %>
+        <span class="checkbox-space"></span>
       
-    </div>
-  </li>
-<% end %>
+        <%= link_to note.title, note_path(note), class: "note-link" %>
+        
+        <%= link_to edit_note_path(note), class: "edit-link", title: "Edit Note" do %>
+          <span class="edit-pencil" aria-hidden="true">&#9998;</span>
+        <% end %>
+        
+        <%= button_to note_path(note), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "delete-button" do %>
+          <span class="delete-cross"></span>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
 </ul>
 
 <%= link_to "New Note", new_note_path, class: "btn btn-primary" %>
-
-

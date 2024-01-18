@@ -1,3 +1,4 @@
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.complete-checkbox').forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
@@ -5,24 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const noteElement = document.getElementById(`note_${noteId}`);
 
       if (checkbox.checked) {
-        updateNoteStatus(noteId, true, noteElement);
+        noteElement.classList.add('completed');
+        updateNoteStatus(noteId, true);
       } else {
-        updateNoteStatus(noteId, false, noteElement);
+        noteElement.classList.remove('completed');
+        updateNoteStatus(noteId, false);
       }
     });
   });
 
-  // Применение стилей к заметкам при первоначальной загрузке
-  document.querySelectorAll('.complete-checkbox').forEach(function(checkbox) {
-    const noteId = checkbox.dataset.noteId;
-    const noteElement = document.getElementById(`note_${noteId}`);
-
-    if (checkbox.checked) {
-      noteElement.classList.add('completed');
-    }
-  });
-
-  function updateNoteStatus(noteId, completed, noteElement) {
+  function updateNoteStatus(noteId, completed) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
     fetch(`/notes/${noteId}`, {
@@ -33,23 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       body: JSON.stringify({ note: { completed: completed } })
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      if (completed) {
-        noteElement.classList.add('completed');
-      } else {
-        noteElement.classList.remove('completed');
-      }
-
-      // Обновление страницы после успешного обновления
-      location.reload();
-    })
+    .then(response => response.json())
+    .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
   }
 });
