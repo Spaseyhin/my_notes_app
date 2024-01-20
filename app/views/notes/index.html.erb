@@ -1,18 +1,37 @@
+<!-- app/views/notes/index.html.erb -->
 <h1>All Notes</h1>
 
+<!-- app/views/notes/index.html.erb -->
 <ul>
   <% @notes.each do |note| %>
-    <li id="note_<%= note.id %>" class="<%= 'completed' if note.completed? %>">
+    <li id="note_<%= note.id %>" class="<%= 'completed' if note.completed? %> <%= 'pinned' if note.pinned? %>">
       <div class="note-item">
         <%= check_box_tag 'complete[]', note.id, note.completed?, class: 'complete-checkbox', data: { note_id: note.id } %>
         <span class="checkbox-space"></span>
-      
+
         <%= link_to note.title, note_path(note), class: "note-link" %>
-        
+
         <%= link_to edit_note_path(note), class: "edit-link", title: "Edit Note" do %>
-          <span class="edit-pencil" aria-hidden="true">&#9998;</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/>
+          </svg>
         <% end %>
         
+        <% if note.pinned? %>
+          <%= button_to unpin_note_path(note), method: :put, remote: true, class: "pin-button-no-border" , data: { confirm: "Are you sure?" } do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-x-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5M6.854 5.146a.5.5 0 1 0-.708.708L7.293 7 6.146 8.146a.5.5 0 1 0 .708.708L8 7.707l1.146 1.147a.5.5 0 1 0 .708-.708L8.707 7l1.147-1.146a.5.5 0 0 0-.708-.708L8 6.293z"/>
+        </svg>
+          <% end %>
+        <% else %>
+           <%= button_to pin_note_path(note), method: :put, remote: true, class: "pin-button-no-border" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-angle-fill" viewBox="0 0 16 16">
+              <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/>
+            </svg>
+          <% end %>
+        <% end %>
+
+
         <%= button_to note_path(note), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "delete-button" do %>
           <span class="delete-cross"></span>
         <% end %>
@@ -20,5 +39,6 @@
     </li>
   <% end %>
 </ul>
+
 
 <%= link_to "New Note", new_note_path, class: "btn btn-primary" %>

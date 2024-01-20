@@ -2,7 +2,7 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   def index
-    @notes = Note.all
+    @notes = Note.order(pinned: :desc, created_at: :desc)
   end
 
   def show
@@ -68,6 +68,26 @@ end
     respond_to do |format|
       format.html { redirect_to notes_url, notice: "Note was successfully destroyed." }
       format.js   { render layout: false }
+    end
+  end
+
+  def pin
+    @note = Note.find(params[:id])
+    @note.update(pinned: true)
+    
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was successfully pinned.' }
+      format.json { render json: @note, status: :ok }
+    end
+  end
+
+  def unpin
+    @note = Note.find(params[:id])
+    @note.update(pinned: false)
+
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was successfully unpinned.' }
+      format.json { render json: @note, status: :ok }
     end
   end
 

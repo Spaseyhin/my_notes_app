@@ -7,9 +7,13 @@ Rails.application.routes.draw do
   get 'notes/edit'
   get 'notes/update'
   get 'notes/destroy'
+
   resources :notes do
-   patch 'complete', on: :member
-   patch 'incomplete', on: :member
+
+    member do
+      put 'pin', to: 'notes#pin'
+      put 'unpin', to: 'notes#unpin'
+    end
   end
   root 'notes#index'
 end

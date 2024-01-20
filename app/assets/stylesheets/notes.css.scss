@@ -110,3 +110,10 @@ body {
   .checkbox-space {
     margin-right: 10px; /* Задайте нужный размер отступа справа */
   }
+.pin-button-no-border {
+  border: none;
+  background-color: transparent; 
+  padding: 0; 
+  cursor: pointer; 
+  font-size: inherit; 
+}
