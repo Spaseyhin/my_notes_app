@@ -13,7 +13,10 @@ Rails.application.routes.draw do
     member do
       put 'pin', to: 'notes#pin'
       put 'unpin', to: 'notes#unpin'
+      put :completed
+      put :not_completed
     end
   end
+  
   root 'notes#index'
 end

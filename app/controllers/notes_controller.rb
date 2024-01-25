@@ -2,7 +2,7 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   def index
-    @notes = Note.order(pinned: :desc, created_at: :desc)
+    @notes = Note.order(pinned: :desc, completed: :asc, created_at: :desc)
   end
 
   def show
@@ -13,15 +13,15 @@ class NotesController < ApplicationController
     @notes = Note.all
   end
 
-def create
-  @note = Note.new(note_params)
+  def create
+    @note = Note.new(note_params)
 
-  if @note.save
-    redirect_to notes_url, notice: 'Note was successfully created.'
-  else
-    render :new
+    if @note.save
+      redirect_to notes_url, notice: 'Note was successfully created.'
+    else
+      render :new
+    end
   end
-end
 
 
   def edit
@@ -40,25 +40,25 @@ end
   end
 end
 
-  def complete
+  def completed
     @note = Note.find(params[:id])
     @note.update(completed: true)
-    
+
     respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Note was successfully marked as complete.' }
+      format.html { redirect_to notes_url, notice: 'Note was marked as completed.' }
+      format.json { render json: @note, status: :ok }
+    end
+  end
+    def not_completed
+    @note = Note.find(params[:id])
+    @note.update(completed: false)
+
+    respond_to do |format|
+      format.html { redirect_to notes_url, notice: 'Note was marked as not completed.' }
       format.json { render json: @note, status: :ok }
     end
   end
 
-  def incomplete
-    @note = Note.find(params[:id])
-    @note.update(completed: false)
-    
-    respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Note was marked as incomplete.' }
-      format.json { render json: @note, status: :ok }
-    end
-  end
 
 
   def destroy
