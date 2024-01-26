@@ -2,8 +2,9 @@ class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   def index
-    @notes = Note.order(pinned: :desc, completed: :asc, created_at: :desc)
+    @notes = Note.order( completed: :asc, pinned: :desc, created_at: :desc)
   end
+
 
   def show
   end
